@@ -1,0 +1,80 @@
+'use client';
+import React, { useEffect, useRef } from 'react'
+import Link from 'next/link'
+import { Button } from "@/components/ui/button"
+import Image from 'next/image'
+
+const HeroSection = () => {
+
+ const imageRef = useRef(null);
+
+ useEffect(() => {
+  const handleScroll = () => {
+    // Check if imageRef.current exists to prevent errors
+    if (!imageRef.current) return;
+    
+    const scrollPosition = window.scrollY;
+    const scrollThreshold = 100;
+    
+    // Debug: Log scroll position (remove this line after testing)
+    console.log('Scroll position:', scrollPosition);
+    
+    // Add/remove scrolled class based on scroll position
+    if (scrollPosition > scrollThreshold) {
+      imageRef.current.classList.add("scrolled");
+      console.log('Added scrolled class'); // Debug log
+    } else {
+      imageRef.current.classList.remove("scrolled");
+      console.log('Removed scrolled class'); // Debug log
+    }
+  };
+
+  // Add scroll event listener
+  window.addEventListener("scroll", handleScroll);
+  
+  // Initial check in case page is already scrolled
+  handleScroll();
+  
+  // Cleanup function to remove event listener
+  return () => window.removeEventListener("scroll", handleScroll); 
+ }, []);
+  return (
+    <section className='w-full pt-36 md:pt-48 pb-10'>
+        <div className="space-y-6 text-center">
+        <div className="space-y-6  mx-auto">
+            <h1 className='text-5xl font-bold md:text-6xl lg:text-7xl xl:text-8xl gradient-title'>Your AI Career Match for 
+                <br/>
+                Personalized Job Success
+            </h1>
+            <p className='mx-auto max-w-[600px] text-muted-foreground md:text-xl'>Advance your career with personalized guidance, interview prep, and AI-powered tools for job success.</p>
+       </div>
+
+       <div className="flex justify-center space-x-4">
+        <Link href="/dashboard">
+          <Button size="lg" className="px-8">Get Started</Button>
+        </Link>
+        <Link href="https://www.youtube.com">
+          <Button size="lg" className="px-8" variant="outline">Get Started</Button>
+        </Link>
+       </div>
+       <div className="hero-image-wrapper mt-5 md:mt-0">
+       <div ref={imageRef} className="hero-image">
+
+            <Image 
+            src={"/banner.jpeg"}
+            width={1280}
+            height={720}
+            alt="Banner careermatcch"
+            className="hero-image rounded-lg shadow-2xl border mx-auto" 
+            priority
+            
+            />
+           </div>
+       </div>
+       </div>
+   
+    </section>
+  )
+}   
+
+export default HeroSection
