@@ -1,3 +1,5 @@
+"use client";
+
 import Image from "next/image";
 import HeroSection from "../components/hero";
 import { Card, CardContent } from "@/components/ui/card";
